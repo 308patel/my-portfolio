@@ -39,7 +39,7 @@ const skills = [
 ];
 
 const technologies = [
-  'JavaScript', 'TypeScript', 'Node.js', 'Express.js', 'NestJs', 'Strapi', 
+  'JavaScript', 'Node.js', 'Express.js', 'NestJs', 'Strapi', 
   'MySQL', 'MongoDB', 'TypeORM', 'RESTful APIs', 'Authentication', 
   'Third-party Integrations', 'Git', 'Agile Development'
 ];
