@@ -1,40 +1,40 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const skills = [
   { 
     name: 'Node.js', 
     percentage: 90,
-    color: 'bg-green-500'
+    color: 'bg-gray-700'  // All progress bars will have this color
   },
   { 
     name: 'Express.js', 
     percentage: 75,
-    color: 'bg-gray-700'
+    color: 'bg-gray-700'  // Same color for all progress bars
   },
   { 
     name: 'NestJs', 
     percentage: 80,
-    color: 'bg-red-600'
+    color: 'bg-gray-700'  // Same color for all progress bars
   },
   { 
     name: 'Strapi', 
     percentage: 70,
-    color: 'bg-blue-600'
+    color: 'bg-gray-700'  // Same color for all progress bars
   },
   { 
     name: 'MySQL', 
     percentage: 70,
-    color: 'bg-blue-500'
+    color: 'bg-gray-700'  // Same color for all progress bars
   },
   { 
     name: 'TypeORM', 
     percentage: 75,
-    color: 'bg-red-500'
+    color: 'bg-gray-700'  // Same color for all progress bars
   },
   { 
     name: 'API Development', 
     percentage: 90,
-    color: 'bg-purple-600'
+    color: 'bg-gray-700'  // Same color for all progress bars
   }
 ];
 
@@ -46,21 +46,14 @@ const technologies = [
 
 const Skills: React.FC = () => {
   const skillsRef = useRef<HTMLDivElement>(null);
+  const [animationTriggered, setAnimationTriggered] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('opacity-100', 'translate-y-0');
+          setAnimationTriggered(true); // Trigger animation once in view
           observer.unobserve(entry.target);
-          
-          // Animate skill bars
-          const skillBars = document.querySelectorAll('.skill-bar');
-          skillBars.forEach((bar, index) => {
-            setTimeout(() => {
-              bar.classList.add('skill-bar-animated');
-            }, index * 100);
-          });
         }
       },
       { threshold: 0.1 }
@@ -81,7 +74,7 @@ const Skills: React.FC = () => {
     <section id="skills" className="py-20 px-4 bg-slate-50">
       <div 
         ref={skillsRef}
-        className="container mx-auto max-w-6xl transition-all duration-1000 ease-out opacity-0 translate-y-8"
+        className="container mx-auto max-w-6xl"
       >
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Skills & Expertise</h2>
@@ -103,9 +96,8 @@ const Skills: React.FC = () => {
                     <div 
                       className={`h-full ${skill.color} skill-bar rounded-full`} 
                       style={{ 
-                        width: '0%', // Start at 0 for animation
-                        maxWidth: `${skill.percentage}%`,
-                        transition: 'width 1s ease-in-out'
+                        width: animationTriggered ? `${skill.percentage}%` : '0%', // Animates only when triggered
+                        transition: 'width 1s ease-in-out',
                       }}
                     ></div>
                   </div>
@@ -169,12 +161,6 @@ const Skills: React.FC = () => {
           </div>
         </div>
       </div>
-      
-      <style jsx="true">{`
-        .skill-bar-animated {
-          width: 100%; /* This will be limited by the max-width set in the inline style */
-        }
-      `}</style>
     </section>
   );
 };
