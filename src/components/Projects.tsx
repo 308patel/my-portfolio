@@ -3,54 +3,77 @@ import { ExternalLink, LayoutGrid, List } from 'lucide-react';
 
 const projects = [
   {
-    title: 'Bikefolder',
-    company: 'Zignuts Technolab Pvt. Ltd.',
+    title: "Bikefolder",
+    company: "Zignuts Technolab Pvt. Ltd.",
     description: [
-      'Bike Platform gives all bikes a digital registration card or a bike card.',
-      'It follows the bicycle throughout its lifecycle and forms the core of an interaction platform which, among other things, deals with maintenance and documentation.',
-      'Implemented core functionalities using Node.js, Express, and MySQL.',
-      'Designed APIs to facilitate interactions for scraping data from various websites related to bicycles.'
+      "Bike Platform gives all bikes a digital registration card or a bike card.",
+      "It follows the bicycle throughout its lifecycle and forms the core of an interaction platform which, among other things, deals with maintenance and documentation.",
+      "Implemented core functionalities using Node.js, Express, and MySQL.",
+      "Designed APIs to facilitate interactions for scraping data from various websites related to bicycles.",
     ],
-    technologies: ['Node.js', 'Express', 'MySQL', 'API Development'],
-    image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+    technologies: ["Node.js", "Express", "MySQL", "API Development"],
+    image:
+      "https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
   },
   {
-    title: 'Carlogik',
-    company: 'Zignuts Technolab Pvt. Ltd.',
+    title: "Carlogik",
+    company: "Zignuts Technolab Pvt. Ltd.",
     description: [
-      'Contributed to the development and maintenance of Automobile Maintenance Platform, the UAE\'s premier automotive online marketplace.',
-      'Created and managed APIs using Node.js, Strapi and MySQL.',
-      'Collaborated with team to enhance user experience and platform functionality.',
-      'Played a key role in improving scalability and performance of the system.'
+      "Contributed to the development and maintenance of Automobile Maintenance Platform, the UAE's premier automotive online marketplace.",
+      "Created and managed APIs using Node.js, Strapi and MySQL.",
+      "Collaborated with team to enhance user experience and platform functionality.",
+      "Played a key role in improving scalability and performance of the system.",
     ],
-    technologies: ['Node.js', 'Strapi', 'MySQL', 'RESTful APIs'],
-    image: 'https://images.pexels.com/photos/3807329/pexels-photo-3807329.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+    technologies: ["Node.js", "Strapi", "MySQL", "RESTful APIs"],
+    image:
+      "https://images.pexels.com/photos/3807329/pexels-photo-3807329.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
   },
   {
-    title: 'Hospitality',
-    company: 'Zignuts Technolab Pvt. Ltd.',
+    title: "Hospitality",
+    company: "Zignuts Technolab Pvt. Ltd.",
     description: [
-      'Engineered a hospitality solution to provide personalized user experiences in hotels across India.',
-      'Utilized Node.js, MySQL, and Strapi to develop and maintain APIs for seamless data exchange.',
-      'Integrated third-party APIs, including Flight Information and Local Events, to enrich user experience.',
-      'Implemented features enabling user information display on in-room TVs upon check-in.'
+      "Engineered a hospitality solution to provide personalized user experiences in hotels across India.",
+      "Utilized Node.js, MySQL, and Strapi to develop and maintain APIs for seamless data exchange.",
+      "Integrated third-party APIs, including Flight Information and Local Events, to enrich user experience.",
+      "Implemented features enabling user information display on in-room TVs upon check-in.",
     ],
-    technologies: ['Node.js', 'Strapi', 'MySQL', 'Third-party API Integration'],
-    image: 'https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+    technologies: ["Node.js", "Strapi", "MySQL", "Third-party API Integration"],
+    image:
+      "https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
   },
   {
-    title: 'Freightro',
-    company: 'Zignuts Technolab Pvt. Ltd.',
+    title: "Freightro",
+    company: "Zignuts Technolab Pvt. Ltd.",
     description: [
-      'A shipping management system allows users to book shipments and place bids. The shipment creator can accept bids and add multiple stop locations.',
-      'Created and managed APIs using NestJs and MySQL.',
-      'Working on modules for generating Bill of Lading and Proof of Delivery for multiple stop locations and invoicing.',
-      'Implemented two-factor authentication for enhanced security during user login.',
-      'Successfully implemented API-based integrations with external partners.'
+      "A shipping management system allows users to book shipments and place bids. The shipment creator can accept bids and add multiple stop locations.",
+      "Created and managed APIs using NestJs and MySQL.",
+      "Working on modules for generating Bill of Lading and Proof of Delivery for multiple stop locations and invoicing.",
+      "Implemented two-factor authentication for enhanced security during user login.",
+      "Successfully implemented API-based integrations with external partners.",
     ],
-    technologies: ['NestJs', 'MySQL', 'TypeORM', 'Authentication', 'API Integration'],
-    image: 'https://images.pexels.com/photos/2226458/pexels-photo-2226458.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-  }
+    technologies: [
+      "NestJs",
+      "MySQL",
+      "TypeORM",
+      "Authentication",
+      "API Integration",
+    ],
+    image:
+      "https://images.pexels.com/photos/2226458/pexels-photo-2226458.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+  },
+  {
+    title: "Wise CRM",
+    company: "Radicalloop Technolab",
+    description: [
+      "Developed comprehensive relationship management between organizations, groups, and individuals with advanced filtering capabilities.",
+      "Built a CRM system using Node.js, NestJS and PostgreSQL to manage organizations, groups, and people with flexible assignment capabilities.",
+      "Implemented features to assign multiple groups to a single organization and person, and link organizations directly to people.",
+      "Added a People Not on List module to identify and display individuals not yet part of the workspace, improving data completeness.",
+    ],
+    technologies: ["Node.js", "NestJS", "PostgreSQL", "CRM", "API Development"],
+    image:
+      "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+  },
 ];
 
 const Projects: React.FC = () => {
