@@ -138,6 +138,25 @@ import { Calendar, MapPin } from "lucide-react";
 const experiences = [
   {
     role: "Software Engineer",
+    company: "Innvonix Tech Solution Pvt. Ltd.",
+    location: "Ahmedabad, Gujarat",
+    period: "SEP 2025 - Present",
+    description: [
+      "Developed and maintained RESTful backend APIs using Node.js and Express.js, supporting scalable and high-performance web applications.",
+      "Implemented core backend business logic for healthcare and food delivery applications, improving workflow efficiency, data processing, and system reliability",
+      "Designed, optimized, and managed SQL databases, including schema design, indexing, and query optimization, to improve data integrity and application performance.",
+      "Collaborated with cross-functional teams, including Web Frontend and React Native developers, to design and integrate Node.js/Express.js backend APIs with client-side applications",
+    ],
+    responsibilities: [
+      "API Development",
+      "Backend Architecture",
+      "Database Design",
+      "Code Reviews",
+      "Documentation",
+    ],
+  },
+  {
+    role: "Software Engineer",
     company: "Radicalloop Technolab LLP.",
     location: "Ahmedabad, Gujarat",
     period: "Jun 2025 - Aug 2025",
