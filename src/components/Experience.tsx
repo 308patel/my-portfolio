@@ -132,8 +132,9 @@
 // };
 
 // export default Experience;
-import React, { useEffect, useRef } from "react";
-import { Calendar, MapPin } from "lucide-react";
+import React from "react";
+import { Calendar, MapPin, Briefcase } from "lucide-react";
+import { motion } from "framer-motion";
 
 const experiences = [
   {
@@ -213,92 +214,89 @@ const experiences = [
 ];
 
 const Experience: React.FC = () => {
-  const experienceRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("opacity-100", "translate-y-0");
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (experienceRef.current) {
-      observer.observe(experienceRef.current);
-    }
-
-    return () => {
-      if (experienceRef.current) {
-        observer.unobserve(experienceRef.current);
-      }
-    };
-  }, []);
-
   return (
-    <section id="experience" className="py-20 px-4 bg-slate-50">
-      <div
-        ref={experienceRef}
-        className="container mx-auto max-w-6xl transition-all duration-1000 ease-out opacity-0 translate-y-8"
-      >
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+    <section id="experience" className="py-24 px-4 bg-surface relative overflow-hidden">
+      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="container mx-auto max-w-6xl relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold text-textMain mb-4 flex items-center justify-center gap-3">
+            <span className="text-primary bg-primary/10 p-2 rounded-lg"><Briefcase size={32} /></span>
             Work Experience
           </h2>
-          <div className="w-20 h-1 bg-slate-800 mx-auto"></div>
-        </div>
+          <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+        </motion.div>
 
-        <div className="space-y-12">
+        <div className="space-y-12 relative">
+          {/* Timeline Line */}
+          <div className="absolute left-0 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-primary/50 via-secondary/50 to-transparent hidden md:block"></div>
+
           {experiences.map((exp, index) => (
-            <div
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
               key={index}
-              className="bg-white rounded-lg shadow-md p-6 md:p-8 relative overflow-hidden"
+              className="glass-card relative md:ml-16 overflow-visible"
             >
-              <div className="absolute top-0 left-0 h-full w-1 bg-slate-800"></div>
+              {/* Timeline Dot */}
+              <div className="hidden md:flex absolute -left-16 top-8 w-8 h-8 rounded-full bg-surface border-4 border-primary shadow-[0_0_15px_rgba(59,130,246,0.6)] items-center justify-center z-20">
+                <div className="w-2 h-2 rounded-full bg-primary" />
+              </div>
 
-              <div className="md:flex justify-between items-start gap-6">
+              <div className="p-6 md:p-8 flex flex-col lg:flex-row justify-between items-start gap-8 z-10 relative">
                 {/* Left Section */}
-                <div className="mb-6 md:mb-0 md:w-2/3">
-                  <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-1">
+                <div className="w-full lg:w-2/3">
+                  <h3 className="text-2xl md:text-3xl font-bold text-textMain mb-2">
                     {exp.role}
                   </h3>
-                  <p className="text-lg text-slate-700 font-medium mb-3">
+                  <p className="text-xl text-primary font-medium mb-4">
                     {exp.company}
                   </p>
 
-                  <div className="flex flex-wrap gap-4 mb-6 text-slate-600 text-sm">
-                    <div className="flex items-center gap-1">
-                      <Calendar size={16} />
+                  <div className="flex flex-wrap gap-4 mb-6 text-textMuted font-medium">
+                    <div className="flex items-center gap-1.5 px-3 py-1 bg-surfaceLight border border-primary/10 rounded-full shadow-inner">
+                      <Calendar size={16} className="text-secondary" />
                       <span>{exp.period}</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <MapPin size={16} />
+                    <div className="flex items-center gap-1.5 px-3 py-1 bg-surfaceLight border border-primary/10 rounded-full shadow-inner">
+                      <MapPin size={16} className="text-secondary" />
                       <span>{exp.location}</span>
                     </div>
                   </div>
 
-                  <ul className="list-disc pl-5 space-y-2 text-slate-700">
+                  <ul className="space-y-3 text-textMuted leading-relaxed text-lg">
                     {exp.description.map((item, i) => (
-                      <li key={i}>{item}</li>
+                      <li key={i} className="flex items-start gap-3">
+                        <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0 opacity-70" />
+                        <span>{item}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
 
                 {/* Right Section - Responsibilities */}
-                <div className="md:w-1/3 bg-slate-50 p-5 rounded-lg">
-                  <h4 className="font-medium text-slate-800 mb-3">
-                    Key Responsibilities:
+                <div className="w-full lg:w-1/3 bg-surfaceLight/50 border border-primary/10 p-6 rounded-2xl shadow-inner">
+                  <h4 className="font-semibold text-textMain mb-4 text-lg border-b border-primary/10 pb-2">
+                    Key Responsibilities
                   </h4>
-                  <ul className="list-disc pl-5 space-y-2 text-slate-600">
+                  <ul className="space-y-3 text-textMuted font-medium">
                     {exp.responsibilities.map((resp, i) => (
-                      <li key={i}>{resp}</li>
+                      <li key={i} className="flex items-center gap-2">
+                        <span className="text-secondary opacity-70">▹</span> {resp}
+                      </li>
                     ))}
                   </ul>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

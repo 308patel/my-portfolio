@@ -10,9 +10,25 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 
 function App() {
+  const [isDark, setIsDark] = React.useState(() => {
+    const saved = localStorage.getItem('theme');
+    return saved ? saved === 'dark' : true;
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDark]);
+
+  const toggleTheme = () => setIsDark(!isDark);
+
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Navbar />
+    <div className="min-h-screen bg-background text-textMain transition-colors duration-300">
+      <Navbar isDark={isDark} toggleTheme={toggleTheme} />
       <main>
         <Hero />
         <About />

@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ExternalLink, LayoutGrid, List } from 'lucide-react';
+import React, { useState } from 'react';
+import { ExternalLink, LayoutGrid, List, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Tilt } from 'react-tilt';
 
 const projects = [
   {
@@ -77,56 +79,41 @@ const projects = [
 ];
 
 const Projects: React.FC = () => {
-  const projectsRef = useRef<HTMLDivElement>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('opacity-100', 'translate-y-0');
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (projectsRef.current) {
-      observer.observe(projectsRef.current);
-    }
-
-    return () => {
-      if (projectsRef.current) {
-        observer.unobserve(projectsRef.current);
-      }
-    };
-  }, []);
+  const [activeProject, setActiveProject] = useState<number | null>(null);
 
   return (
-    <section id="projects" className="py-20 px-4 bg-white">
-      <div 
-        ref={projectsRef}
-        className="container mx-auto max-w-6xl transition-all duration-1000 ease-out opacity-0 translate-y-8"
-      >
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Projects</h2>
-          <div className="w-20 h-1 bg-slate-800 mx-auto mb-6"></div>
-          <p className="text-slate-600 max-w-3xl mx-auto">
+    <section id="projects" className="py-24 px-4 bg-background relative overflow-hidden">
+      {/* Decorative Orbs */}
+      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="container mx-auto max-w-6xl relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold text-textMain mb-4">Featured Projects</h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-8 rounded-full"></div>
+          <p className="text-textMuted max-w-3xl mx-auto text-lg leading-relaxed">
             Here are some of the key projects I've worked on. Each project demonstrates my ability to build 
             robust backend solutions and APIs for different industries.
           </p>
-        </div>
+        </motion.div>
         
-        <div className="flex justify-end mb-6">
-          <div className="bg-slate-100 p-1 rounded-md inline-flex">
+        <div className="flex justify-end mb-8 relative z-20">
+          <div className="glass p-1 rounded-xl inline-flex border border-primary/10">
             <button 
-              className={`p-2 rounded ${viewMode === 'grid' ? 'bg-white shadow-sm' : 'text-slate-600'}`}
+              className={`p-2.5 rounded-lg transition-colors ${viewMode === 'grid' ? 'bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.1)] text-primary' : 'text-textMuted hover:text-textMain'}`}
               onClick={() => setViewMode('grid')}
             >
               <LayoutGrid size={20} />
             </button>
             <button 
-              className={`p-2 rounded ${viewMode === 'list' ? 'bg-white shadow-sm' : 'text-slate-600'}`}
+              className={`p-2.5 rounded-lg transition-colors ${viewMode === 'list' ? 'bg-surface shadow-[0_4px_12px_rgba(0,0,0,0.1)] text-primary' : 'text-textMuted hover:text-textMain'}`}
               onClick={() => setViewMode('list')}
             >
               <List size={20} />
@@ -134,178 +121,129 @@ const Projects: React.FC = () => {
           </div>
         </div>
         
-        {viewMode === 'grid' ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <motion.div 
+          layout
+          className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" : "flex flex-col gap-8"}
+        >
+          <AnimatePresence>
             {projects.map((project, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden border border-slate-100 hover:shadow-lg transition-shadow">
-                <div className="h-48 overflow-hidden">
-                  <img 
-                    src={project.image} 
-                    alt={project.title}
-                    className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-                  />
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                key={index}
+                className="h-full"
+              >
+                <Tilt options={{ max: 10, scale: 1.02, speed: 400 }} className="h-full">
+                  <div className={`glass-card h-full flex ${viewMode === 'list' ? 'flex-col md:flex-row' : 'flex-col'} group cursor-pointer`} onClick={() => setActiveProject(index)}>
+                    <div className={`${viewMode === 'list' ? 'md:w-2/5 md:h-auto' : 'h-56'} w-full overflow-hidden relative`}>
+                      <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-500 z-10 mix-blend-overlay"></div>
+                      <img 
+                        src={project.image} 
+                        alt={project.title}
+                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                      />
+                    </div>
+                    <div className={`p-8 flex flex-col flex-grow ${viewMode === 'list' ? 'md:w-3/5' : ''}`}>
+                      <h3 className="text-2xl font-bold text-textMain mb-2 group-hover:text-primary transition-colors">{project.title}</h3>
+                      <p className="text-secondary font-medium mb-4">{project.company}</p>
+                      
+                      <p className="text-textMuted mb-6 line-clamp-3 leading-relaxed flex-grow">{project.description[0]}</p>
+                      
+                      <div className="flex flex-wrap gap-2 mb-6 mt-auto">
+                        {project.technologies.slice(0, 3).map((tech, i) => (
+                          <span 
+                            key={i}
+                            className="px-3 py-1 bg-surfaceLight border border-primary/10 text-textMuted text-xs font-semibold rounded-full"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                        {project.technologies.length > 3 && (
+                          <span className="px-3 py-1 bg-surfaceLight border border-primary/10 text-textMuted/70 text-xs font-semibold rounded-full">
+                            +{project.technologies.length - 3} more
+                          </span>
+                        )}
+                      </div>
+                      
+                      <div className="flex items-center gap-2 text-primary font-medium group-hover:translate-x-2 transition-transform">
+                        Explore <ExternalLink size={16} />
+                      </div>
+                    </div>
+                  </div>
+                </Tilt>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {activeProject !== null && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setActiveProject(null)}
+              className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto glass border border-primary/20 rounded-2xl shadow-2xl z-10"
+            >
+              <div className="sticky top-0 right-0 p-4 flex justify-end z-20 pointer-events-none">
+                <button 
+                  onClick={() => setActiveProject(null)}
+                  className="p-2 bg-surfaceLight/80 backdrop-blur rounded-full text-textMuted hover:text-textMain pointer-events-auto transition-colors border border-primary/10"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+              
+              <div className="px-8 pb-8 pt-4">
+                <h3 className="text-3xl font-bold text-textMain mb-2">{projects[activeProject].title}</h3>
+                <p className="text-secondary font-medium text-lg mb-8">{projects[activeProject].company}</p>
+                
+                <div className="mb-8">
+                  <h4 className="text-xl font-semibold text-textMain mb-4 flex items-center gap-2">
+                    <span className="text-primary">✨</span> About Project
+                  </h4>
+                  <ul className="space-y-4 text-textMuted leading-relaxed text-lg">
+                    {projects[activeProject].description.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <div className="mt-2 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">{project.title}</h3>
-                  <p className="text-slate-600 mb-4">{project.company}</p>
-                  
-                  <p className="text-slate-700 mb-4">{project.description[0]}</p>
-                  
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech, i) => (
+                
+                <div>
+                  <h4 className="text-xl font-semibold text-textMain mb-4 flex items-center gap-2">
+                    <span className="text-secondary">🛠️</span> Technologies
+                  </h4>
+                  <div className="flex flex-wrap gap-3">
+                    {projects[activeProject].technologies.map((tech, i) => (
                       <span 
                         key={i}
-                        className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+                        className="px-4 py-2 bg-surfaceLight border border-primary/10 text-textMain font-medium rounded-xl shadow-inner"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
-                  
-                  <button 
-                    onClick={() => {
-                      document.getElementById(`project-modal-${index}`)?.classList.remove('hidden');
-                    }}
-                    className="text-slate-700 hover:text-slate-900 flex items-center gap-1 font-medium"
-                  >
-                    View Details <ExternalLink size={16} />
-                  </button>
-                </div>
-                
-                {/* Modal for project details */}
-                <div id={`project-modal-${index}`} className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-                  <div className="bg-white rounded-lg max-w-3xl max-h-[90vh] overflow-y-auto p-6 m-4">
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-2xl font-bold text-slate-900">{project.title}</h3>
-                      <button 
-                        onClick={() => {
-                          document.getElementById(`project-modal-${index}`)?.classList.add('hidden');
-                        }}
-                        className="text-slate-500 hover:text-slate-700"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </div>
-                    
-                    <p className="text-slate-600 mb-4">{project.company}</p>
-                    
-                    <div className="mb-6">
-                      <h4 className="font-medium text-slate-800 mb-2">Description:</h4>
-                      <ul className="list-disc pl-5 space-y-2 text-slate-700">
-                        {project.description.map((item, i) => (
-                          <li key={i}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-medium text-slate-800 mb-2">Technologies Used:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech, i) => (
-                          <span 
-                            key={i}
-                            className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {projects.map((project, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden border border-slate-100 hover:shadow-lg transition-shadow">
-                <div className="md:flex">
-                  <div className="md:w-1/3 h-48 md:h-auto overflow-hidden">
-                    <img 
-                      src={project.image} 
-                      alt={project.title}
-                      className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-6 md:w-2/3">
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">{project.title}</h3>
-                    <p className="text-slate-600 mb-4">{project.company}</p>
-                    
-                    <p className="text-slate-700 mb-4">{project.description[0]}</p>
-                    
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.technologies.map((tech, i) => (
-                        <span 
-                          key={i}
-                          className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    
-                    <button 
-                      onClick={() => {
-                        document.getElementById(`project-modal-list-${index}`)?.classList.remove('hidden');
-                      }}
-                      className="text-slate-700 hover:text-slate-900 flex items-center gap-1 font-medium"
-                    >
-                      View Details <ExternalLink size={16} />
-                    </button>
-                  </div>
-                </div>
-                
-                {/* Modal for project details */}
-                <div id={`project-modal-list-${index}`} className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
-                  <div className="bg-white rounded-lg max-w-3xl max-h-[90vh] overflow-y-auto p-6 m-4">
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-2xl font-bold text-slate-900">{project.title}</h3>
-                      <button 
-                        onClick={() => {
-                          document.getElementById(`project-modal-list-${index}`)?.classList.add('hidden');
-                        }}
-                        className="text-slate-500 hover:text-slate-700"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </div>
-                    
-                    <p className="text-slate-600 mb-4">{project.company}</p>
-                    
-                    <div className="mb-6">
-                      <h4 className="font-medium text-slate-800 mb-2">Description:</h4>
-                      <ul className="list-disc pl-5 space-y-2 text-slate-700">
-                        {project.description.map((item, i) => (
-                          <li key={i}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-medium text-slate-800 mb-2">Technologies Used:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech, i) => (
-                          <span 
-                            key={i}
-                            className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+            </motion.div>
           </div>
         )}
-      </div>
+      </AnimatePresence>
     </section>
   );
 };

@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --background: #ffffff;
+  --surface: #f8fafc;
+  --surface-light: #f1f5f9;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.05);
+}
+
+.dark {
+  --background: #0a0a0a;
+  --surface: #121212;
+  --surface-light: #1e1e1e;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --glass-bg: rgba(30, 30, 30, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  color-scheme: dark;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -9,23 +30,42 @@ html {
 body {
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  background-color: var(--background);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 @layer base {
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
+    @apply font-semibold tracking-tight text-textMain;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply backdrop-blur-md border shadow-[0_4px_30px_rgba(0,0,0,0.05)];
+    background-color: var(--glass-bg);
+    border-color: var(--glass-border);
+  }
+  .glass-card {
+    @apply backdrop-blur-lg border rounded-2xl shadow-xl hover:shadow-2xl hover:border-primary/30 transition-all duration-300 relative overflow-hidden;
+    background-color: var(--glass-bg);
+    border-color: var(--glass-border);
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
   }
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-slate-100;
+  @apply bg-background;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 rounded-full hover:bg-slate-400 transition-colors;
+  @apply bg-surfaceLight rounded-full hover:bg-slate-700 transition-colors border-2 border-background;
 }

@@ -1,105 +1,91 @@
-import React, { useEffect, useRef } from 'react';
-import { Mail, Phone, MapPin, Linkedin } from 'lucide-react';
+import React from 'react';
+import { Mail, Phone, MapPin, Linkedin, Send } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Contact: React.FC = () => {
-  const contactRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('opacity-100', 'translate-y-0');
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (contactRef.current) {
-      observer.observe(contactRef.current);
-    }
-
-    return () => {
-      if (contactRef.current) {
-        observer.unobserve(contactRef.current);
-      }
-    };
-  }, []);
-
   return (
-    <section id="contact" className="py-20 px-4 bg-slate-50">
-      <div 
-        ref={contactRef}
-        className="container mx-auto max-w-6xl transition-all duration-1000 ease-out opacity-0 translate-y-8"
-      >
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Get In Touch</h2>
-          <div className="w-20 h-1 bg-slate-800 mx-auto mb-6"></div>
-          <p className="text-slate-600 max-w-xl mx-auto">
+    <section id="contact" className="py-24 px-4 bg-surface relative overflow-hidden">
+      {/* Decorative Glow */}
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
+
+      <div className="container mx-auto max-w-6xl relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold text-textMain mb-4">Get In Touch</h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-8 rounded-full"></div>
+          <p className="text-textMuted max-w-2xl mx-auto text-lg leading-relaxed">
             Feel free to reach out to me for any inquiries or opportunities. I'm always open to discussing new projects, 
             creative ideas, or opportunities to be part of your vision.
           </p>
-        </div>
+        </motion.div>
         
-        <div className="max-w-2xl mx-auto">
-          <div className="space-y-8">
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-white rounded-lg shadow-md text-slate-700">
-                <Mail size={24} />
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-6"
+          >
+            {[
+              { icon: <Mail size={24} />, title: 'Email', value: 'jaydeepatel2001@gmail.com', link: 'mailto:jaydeepatel2001@gmail.com' },
+              { icon: <Phone size={24} />, title: 'Phone', value: '+91 8160779122', link: 'tel:+918160779122' },
+              { icon: <MapPin size={24} />, title: 'Location', value: 'Nadiad, Gujarat, India', link: '#' },
+              { icon: <Linkedin size={24} />, title: 'LinkedIn', value: 'jaydeep-patel', link: 'https://www.linkedin.com/in/jaydeep-patel-081b5b1b3' }
+            ].map((item, idx) => (
+              <motion.div 
+                key={idx}
+                whileHover={{ scale: 1.02 }}
+                className="flex items-center gap-6 glass-card p-6"
+              >
+                <div className="p-4 bg-surface rounded-2xl text-primary border border-primary/10 shadow-inner">
+                  {item.icon}
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold text-textMuted mb-1">{item.title}</h4>
+                  {item.link !== '#' ? (
+                    <a href={item.link} target={item.link.startsWith('http') ? '_blank' : '_self'} rel="noreferrer" className="text-textMain hover:text-primary transition-colors text-lg">
+                      {item.value}
+                    </a>
+                  ) : (
+                    <p className="text-textMain text-lg">{item.value}</p>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="glass-card p-8"
+          >
+            <form className="flex flex-col gap-6">
+              <div>
+                <label className="block text-textMuted mb-2 font-medium">Name</label>
+                <input type="text" className="w-full bg-surface/50 border border-primary/10 rounded-xl px-4 py-3 text-textMain focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all placeholder:text-textMuted/40" placeholder="John Doe" />
               </div>
               <div>
-                <h4 className="text-lg font-semibold text-slate-800 mb-1">Email</h4>
-                <a 
-                  href="mailto:jaydeepatel2001@gmail.com" 
-                  className="text-slate-600 hover:text-slate-900 transition-colors"
-                >
-                  jaydeepatel2001@gmail.com
-                </a>
-              </div>
-            </div>
-            
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-white rounded-lg shadow-md text-slate-700">
-                <Phone size={24} />
+                <label className="block text-textMuted mb-2 font-medium">Email</label>
+                <input type="email" className="w-full bg-surface/50 border border-primary/10 rounded-xl px-4 py-3 text-textMain focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all placeholder:text-textMuted/40" placeholder="john@example.com" />
               </div>
               <div>
-                <h4 className="text-lg font-semibold text-slate-800 mb-1">Phone</h4>
-                <a 
-                  href="tel:+918160779122" 
-                  className="text-slate-600 hover:text-slate-900 transition-colors"
-                >
-                  +91 8160779122
-                </a>
+                <label className="block text-textMuted mb-2 font-medium">Message</label>
+                <textarea rows={4} className="w-full bg-surface/50 border border-primary/10 rounded-xl px-4 py-3 text-textMain focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all resize-none placeholder:text-textMuted/40" placeholder="How can I help you?"></textarea>
               </div>
-            </div>
-            
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-white rounded-lg shadow-md text-slate-700">
-                <MapPin size={24} />
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold text-slate-800 mb-1">Location</h4>
-                <p className="text-slate-600">Nadiad, Gujarat, India</p>
-              </div>
-            </div>
-            
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-white rounded-lg shadow-md text-slate-700">
-                <Linkedin size={24} />
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold text-slate-800 mb-1">LinkedIn</h4>
-                <a 
-                  href="https://www.linkedin.com/in/jaydeep-patel-081b5b1b3" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-slate-600 hover:text-slate-900 transition-colors"
-                >
-                  linkedin.com/in/jaydeep-patel-081b5b1b3
-                </a>
-              </div>
-            </div>
-          </div>
+              <button type="submit" className="w-full py-4 bg-primary hover:bg-primary/9 group hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 group">
+                Send Message
+                <Send size={18} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </form>
+          </motion.div>
         </div>
       </div>
     </section>
