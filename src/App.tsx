@@ -1,4 +1,5 @@
 import React from 'react';
+import { Toaster } from 'react-hot-toast';
 import Hero from './components/Hero';
 import About from './components/About';
 import Experience from './components/Experience';
@@ -28,6 +29,13 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background text-textMain transition-colors duration-300">
+      <Toaster position="bottom-right" toastOptions={{
+        style: {
+          background: isDark ? '#1e1e1e' : '#ffffff',
+          color: isDark ? '#f1f5f9' : '#0f172a',
+          border: `1px solid ${isDark ? 'rgba(59, 130, 246, 0.2)' : 'rgba(59, 130, 246, 0.1)'}`,
+        },
+      }} />
       <Navbar isDark={isDark} toggleTheme={toggleTheme} />
       <main>
         <Hero />
