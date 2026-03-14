@@ -20,11 +20,12 @@ const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.email || !formData.message) {
       toast.error('Please fill in all fields');
       return;
     }
+    console.log(">>>>>>>>", formData.email)
 
     setIsLoading(true);
 
@@ -35,8 +36,8 @@ const Contact: React.FC = () => {
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
-          from_name: formData.name,
-          from_email: formData.email,
+          name: formData.name,
+          email: formData.email,
           message: formData.message,
           to_name: 'Jaydeep',
         },
@@ -59,7 +60,7 @@ const Contact: React.FC = () => {
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="container mx-auto max-w-6xl relative z-10">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -69,13 +70,13 @@ const Contact: React.FC = () => {
           <h2 className="text-3xl md:text-5xl font-bold text-textMain mb-4">Get In Touch</h2>
           <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mb-8 rounded-full"></div>
           <p className="text-textMuted max-w-2xl mx-auto text-lg leading-relaxed">
-            Feel free to reach out to me for any inquiries or opportunities. I'm always open to discussing new projects, 
+            Feel free to reach out to me for any inquiries or opportunities. I'm always open to discussing new projects,
             creative ideas, or opportunities to be part of your vision.
           </p>
         </motion.div>
-        
+
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -88,7 +89,7 @@ const Contact: React.FC = () => {
               { icon: <MapPin size={24} />, title: 'Location', value: 'Nadiad, Gujarat, India', link: '#' },
               { icon: <Linkedin size={24} />, title: 'LinkedIn', value: 'jaydeep-patel', link: 'https://www.linkedin.com/in/jaydeep-patel-081b5b1b3' }
             ].map((item, idx) => (
-              <motion.div 
+              <motion.div
                 key={idx}
                 whileHover={{ scale: 1.02 }}
                 className="flex items-center gap-6 glass-card p-6"
@@ -120,42 +121,42 @@ const Contact: React.FC = () => {
             <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-6">
               <div>
                 <label className="block text-textMuted mb-2 font-medium">Name</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-surface/50 border border-primary/10 rounded-xl px-4 py-3 text-textMain focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all placeholder:text-textMuted/40" 
-                  placeholder="John Doe" 
+                  className="w-full bg-surface/50 border border-primary/10 rounded-xl px-4 py-3 text-textMain focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all placeholder:text-textMuted/40"
+                  placeholder="John Doe"
                 />
               </div>
               <div>
                 <label className="block text-textMuted mb-2 font-medium">Email</label>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full bg-surface/50 border border-primary/10 rounded-xl px-4 py-3 text-textMain focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all placeholder:text-textMuted/40" 
-                  placeholder="john@example.com" 
+                  className="w-full bg-surface/50 border border-primary/10 rounded-xl px-4 py-3 text-textMain focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all placeholder:text-textMuted/40"
+                  placeholder="john@example.com"
                 />
               </div>
               <div>
                 <label className="block text-textMuted mb-2 font-medium">Message</label>
-                <textarea 
+                <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={4} 
-                  className="w-full bg-surface/50 border border-primary/10 rounded-xl px-4 py-3 text-textMain focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all resize-none placeholder:text-textMuted/40" 
+                  rows={4}
+                  className="w-full bg-surface/50 border border-primary/10 rounded-xl px-4 py-3 text-textMain focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all resize-none placeholder:text-textMuted/40"
                   placeholder="How can I help you?"
                 ></textarea>
               </div>
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={isLoading}
                 className="w-full py-4 bg-primary hover:bg-primary/9 group hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
               >
