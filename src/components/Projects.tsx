@@ -195,7 +195,7 @@ const Projects: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto glass border border-primary/20 rounded-2xl shadow-2xl z-10"
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-surface border border-primary/20 rounded-2xl shadow-2xl z-10"
             >
               <div className="sticky top-0 right-0 p-4 flex justify-end z-20 pointer-events-none">
                 <button 
@@ -206,19 +206,19 @@ const Projects: React.FC = () => {
                 </button>
               </div>
               
-              <div className="px-8 pb-8 pt-4">
-                <h3 className="text-3xl font-bold text-textMain mb-2">{projects[activeProject].title}</h3>
-                <p className="text-secondary font-medium text-lg mb-8">{projects[activeProject].company}</p>
+              <div className="px-6 md:px-10 pb-10 pt-6">
+                <h3 className="text-3xl md:text-4xl font-bold text-textMain mb-2 leading-tight">{projects[activeProject].title}</h3>
+                <p className="text-primary font-semibold text-lg mb-8">{projects[activeProject].company}</p>
                 
                 <div className="mb-8">
                   <h4 className="text-xl font-semibold text-textMain mb-4 flex items-center gap-2">
                     <span className="text-primary">✨</span> About Project
                   </h4>
-                  <ul className="space-y-4 text-textMuted leading-relaxed text-lg">
+                  <ul className="space-y-4 text-textMain/90 dark:text-textMain leading-relaxed text-lg">
                     {projects[activeProject].description.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <div className="mt-2 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                        <span>{item}</span>
+                      <li key={i} className="flex items-start gap-4">
+                        <div className="mt-2.5 w-2 h-2 rounded-full bg-primary flex-shrink-0" />
+                        <span className="flex-1">{item}</span>
                       </li>
                     ))}
                   </ul>
