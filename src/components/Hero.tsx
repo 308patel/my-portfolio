@@ -13,7 +13,7 @@ const Hero: React.FC = () => {
 
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12 md:gap-16">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
               Node.js Developer
             </h2>
             <p className="text-lg text-textMuted mb-8 leading-relaxed max-w-xl">
-              Passionate about creating robust backend solutions with 2+ years
+              Passionate about creating robust backend solutions with 3+ years
               of experience developing APIs and integrating systems for various
               industries including automotive, hospitality, and shipping.
             </p>
@@ -82,7 +82,7 @@ const Hero: React.FC = () => {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
@@ -106,8 +106,8 @@ const Hero: React.FC = () => {
           </motion.div>
         </div>
       </div>
-      
-      <motion.button 
+
+      <motion.button
         onClick={() => {
           const element = document.getElementById('about');
           if (element) {
